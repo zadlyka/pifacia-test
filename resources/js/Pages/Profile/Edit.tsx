@@ -1,38 +1,23 @@
+import { PageProps } from "@/types";
+import { Head } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { Card } from "@/Components/ui/card";
 import UpdatePasswordForm from "./Partials/UpdatePasswordForm";
 import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm";
-import { Head } from "@inertiajs/react";
-import { PageProps } from "@/types";
 
-export default function Edit({
-    auth,
-    mustVerifyEmail,
-    status,
-}: PageProps<{ mustVerifyEmail: boolean; status?: string }>) {
+export default function Edit({ auth }: PageProps) {
     return (
-        <AuthenticatedLayout
-            user={auth.user}
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Profile
-                </h2>
-            }
-        >
+        <AuthenticatedLayout user={auth.user}>
             <Head title="Profile" />
-
-            <div className="py-12">
+            <div className="p-4">
                 <div className="mx-auto space-y-6 max-w-7xl sm:px-6 lg:px-8">
-                    <div className="p-4 bg-white shadow sm:p-8 sm:rounded-lg">
-                        <UpdateProfileInformationForm
-                            mustVerifyEmail={mustVerifyEmail}
-                            status={status}
-                            className="max-w-xl"
-                        />
-                    </div>
+                    <Card className="p-4">
+                        <UpdateProfileInformationForm className="max-w-xl" />
+                    </Card>
 
-                    <div className="p-4 bg-white shadow sm:p-8 sm:rounded-lg">
+                    <Card className="p-4">
                         <UpdatePasswordForm className="max-w-xl" />
-                    </div>
+                    </Card>
                 </div>
             </div>
         </AuthenticatedLayout>
