@@ -7,6 +7,7 @@ interface SubMenu {
     name: string;
     href: string;
     icon: LucideIcon;
+    active: boolean;
 }
 
 export interface Menu {
@@ -26,17 +27,19 @@ export function Sidebar({
             <ul className="flex-grow space-y-2 list-none">
                 {menu.map((item, index) => (
                     <li key={index}>
-                        <h2 className="font-semibold tracking-tight">
+                        <h2 className="mb-2 font-semibold tracking-tight">
                             {item.label}
                         </h2>
-                        <ul className="list-none">
+                        <ul className="space-y-2 list-none">
                             {item.subMenu.map((item, index) => (
                                 <li key={index}>
                                     <Link
                                         href={item.href}
                                         className={cn(
                                             buttonVariants({
-                                                variant: "ghost",
+                                                variant: item.active
+                                                    ? "default"
+                                                    : "ghost",
                                             }),
                                             "text-sm flex justify-start w-full"
                                         )}

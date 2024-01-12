@@ -1,13 +1,13 @@
 import { PageProps } from "@/types";
 import { Head } from "@inertiajs/react";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import DashboardLayout from "@/Layouts/dashboard-layout";
 import { Card } from "@/Components/ui/card";
 import UpdatePasswordForm from "./Partials/UpdatePasswordForm";
 import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm";
 
 export default function Edit({ auth }: PageProps) {
     return (
-        <AuthenticatedLayout user={auth.user}>
+        <DashboardLayout user={auth.user}>
             <Head title="Profile" />
             <div className="p-4">
                 <div className="mx-auto space-y-6 max-w-7xl sm:px-6 lg:px-8">
@@ -20,6 +20,6 @@ export default function Edit({ auth }: PageProps) {
                     </Card>
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </DashboardLayout>
     );
 }

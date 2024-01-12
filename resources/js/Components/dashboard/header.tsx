@@ -12,16 +12,28 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
-import { Menu, Sidebar } from "@/Components/sidebar";
-import { Link } from "@inertiajs/react";
+import { Menu, Sidebar } from "@/Components/dashboard/sidebar";
+import { Link, useForm } from "@inertiajs/react";
+import { FormEventHandler } from "react";
 
 export function Header({
     menu,
+    search,
     className,
 }: {
     menu: Menu[];
+    search?: string;
     className?: string;
 }) {
+    const { setData, get } = useForm({
+        search: "",
+    });
+
+    const submit: FormEventHandler = (e) => {
+        e.preventDefault();
+        get(route("basic"));
+    };
+
     return (
         <div
             className={cn(
@@ -38,7 +50,16 @@ export function Header({
                 </SheetContent>
             </Sheet>
 
-            <Input type="search" placeholder="Search..." className="sm:w-1/3" />
+            <form onSubmit={submit} className="sm:w-1/3">
+                <Input
+                    id="search"
+                    type="search"
+                    name="search"
+                    placeholder="search..."
+                    defaultValue={search}
+                    onChange={(e) => setData("search", e.target.value)}
+                />
+            </form>
 
             <div className="flex gap-2 sm:gap-4">
                 <DropdownMenu>
