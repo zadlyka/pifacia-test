@@ -21,6 +21,12 @@ export default function DashboardLayout({
                     active: route().current("dashboard"),
                 },
                 {
+                    name: "Role",
+                    href: route("role"),
+                    icon: Grid2X2,
+                    active: route().current("role"),
+                },
+                {
                     name: "Departement",
                     href: route("departement"),
                     icon: Grid2X2,

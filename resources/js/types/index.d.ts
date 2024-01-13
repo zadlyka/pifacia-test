@@ -11,6 +11,12 @@ export interface Option {
     label: string;
 }
 
+export interface Role {
+    id: string;
+    name: string;
+    permissions: Option[];
+}
+
 export interface Departement {
     id: string;
     name: string;
