@@ -92,6 +92,13 @@ export default function Index({
                                 defaultValue={sort ?? undefined}
                             />
 
+                            <a
+                                href={route("departement.export")}
+                                className={buttonVariants()}
+                            >
+                                Export
+                            </a>
+
                             <Link
                                 href={route("departement.create")}
                                 className={buttonVariants()}

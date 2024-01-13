@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
+use App\Exports\ExportDepartement;
 use App\Models\Departement;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Departement\StoreDepartementRequest;
 use App\Http\Requests\Departement\UpdateDepartementRequest;
@@ -86,5 +88,10 @@ class DepartementController extends Controller
     {
         $departement->delete();
         return Redirect::route('departement');
+    }
+
+    public function export()
+    {
+        return Excel::download(new ExportDepartement, 'departements.xlsx');
     }
 }
