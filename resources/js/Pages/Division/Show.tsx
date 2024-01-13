@@ -1,6 +1,6 @@
 import moment from "moment";
 import { Head, Link } from "@inertiajs/react";
-import { Audit, Departement, PageProps } from "@/types";
+import { Audit, Division, PageProps } from "@/types";
 import DashboardLayout from "@/Layouts/dashboard-layout";
 import { buttonVariants } from "@/Components/ui/button";
 import {
@@ -28,26 +28,26 @@ function ExtractNotes({ data, event }: { data: any; event: string }) {
 
 export default function Show({
     auth,
-    departement,
+    division,
     audits,
-}: PageProps<{ departement: Departement; audits: Audit[] }>) {
+}: PageProps<{ division: Division; audits: Audit[] }>) {
     return (
         <DashboardLayout user={auth.user}>
-            <Head title="Departement" />
+            <Head title="Division" />
             <div className="p-4">
                 <div className="mx-auto space-y-4 max-w-7xl sm:px-6 lg:px-8">
                     <div className="inline-flex justify-between w-full">
                         <div className="space-y-1">
                             <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
-                                Departement
+                                Division
                             </h2>
                             <p className="text-xs sm:text-sm text-muted-foreground">
-                                A detail of your departement.
+                                A detail of your division.
                             </p>
                         </div>
 
                         <Link
-                            href={route("departement.edit", departement.id)}
+                            href={route("division.edit", division.id)}
                             className={buttonVariants()}
                         >
                             Edit
@@ -59,30 +59,26 @@ export default function Show({
                             <dt className="text-sm font-medium w-36 text-muted-foreground md:text-base">
                                 Name
                             </dt>
-                            <dd className="font-medium">{departement.name}</dd>
+                            <dd className="font-medium">{division.name}</dd>
                         </div>
                         <div className="flex flex-row">
                             <dt className="text-sm font-medium w-36 text-muted-foreground md:text-base">
                                 Start At
                             </dt>
-                            <dd className="font-medium">
-                                {departement.start_at}
-                            </dd>
+                            <dd className="font-medium">{division.start_at}</dd>
                         </div>
                         <div className="flex flex-row">
                             <dt className="text-sm font-medium w-36 text-muted-foreground md:text-base">
                                 End At
                             </dt>
-                            <dd className="font-medium">
-                                {departement.end_at}
-                            </dd>
+                            <dd className="font-medium">{division.end_at}</dd>
                         </div>
                         <div className="flex flex-row">
                             <dt className="text-sm font-medium w-36 text-muted-foreground md:text-base">
                                 Actived
                             </dt>
                             <dd className="font-medium">
-                                {departement.actived ? "Actived" : "Inactived"}
+                                {division.actived ? "Actived" : "Inactived"}
                             </dd>
                         </div>
                         <div className="flex flex-row">
@@ -91,7 +87,7 @@ export default function Show({
                             </dt>
                             <dd className="font-medium">
                                 <ul>
-                                    {departement.permissions?.map(
+                                    {division.permissions?.map(
                                         (permission, index) => (
                                             <li key={index}>
                                                 {permission.label}

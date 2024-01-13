@@ -20,6 +20,15 @@ export interface Departement {
     permissions: Option[];
 }
 
+export interface Division {
+    id: string;
+    name: string;
+    start_at: string;
+    end_at: string;
+    actived: boolean;
+    permissions: Option[];
+}
+
 export interface User {
     id: string;
     name: string;

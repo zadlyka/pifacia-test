@@ -26,6 +26,12 @@ export default function DashboardLayout({
                     icon: Grid2X2,
                     active: route().current("departement"),
                 },
+                {
+                    name: "Division",
+                    href: route("division"),
+                    icon: Grid2X2,
+                    active: route().current("division"),
+                },
             ],
         },
     ];
