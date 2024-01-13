@@ -52,8 +52,11 @@ class DepartementController extends Controller
      */
     public function show(Departement $departement)
     {
-        $audit = $departement->audits()->latest()->first();
-        return Inertia::render('Departement/Show', ['departement' => $departement, 'audit' =>  $audit]);
+        $audits = $departement->audits()->with('user')->get();
+        return Inertia::render('Departement/Show', [
+            'departement' => $departement,
+            'audits' =>  $audits
+        ]);
     }
 
     /**

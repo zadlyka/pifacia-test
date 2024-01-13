@@ -1,5 +1,6 @@
+import moment from "moment";
 import { Head, Link } from "@inertiajs/react";
-import { Departement, PageProps } from "@/types";
+import { Audit, Departement, PageProps } from "@/types";
 import DashboardLayout from "@/Layouts/dashboard-layout";
 import { buttonVariants } from "@/Components/ui/button";
 import {
@@ -11,13 +12,25 @@ import {
     TableRow,
 } from "@/Components/ui/table";
 
+function ExtractNotes({ data, event }: { data: any; event: string }) {
+    const keys = data instanceof Object ? Object.keys(data) : [];
+
+    return (
+        <ul>
+            {keys?.map((item, index) => (
+                <li key={index}>
+                    {event} data {item}
+                </li>
+            ))}
+        </ul>
+    );
+}
+
 export default function Show({
     auth,
     departement,
-    audit
-}: PageProps<{ departement: Departement, audit: any }>) {
-    console.log(audit);
-    
+    audits,
+}: PageProps<{ departement: Departement; audits: Audit[] }>) {
     return (
         <DashboardLayout user={auth.user}>
             <Head title="Departement" />
@@ -46,9 +59,7 @@ export default function Show({
                             <dt className="text-sm font-medium w-36 text-muted-foreground md:text-base">
                                 Name
                             </dt>
-                            <dd className="font-medium">
-                                {departement.name}
-                            </dd>
+                            <dd className="font-medium">{departement.name}</dd>
                         </div>
                         <div className="flex flex-row">
                             <dt className="text-sm font-medium w-36 text-muted-foreground md:text-base">
@@ -106,14 +117,27 @@ export default function Show({
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead>Name</TableHead>
+                                <TableHead>Date</TableHead>
+                                <TableHead>User</TableHead>
+                                <TableHead>Event</TableHead>
+                                <TableHead>Notes</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {[]?.map((item: Departement) => (
+                            {audits?.map((item) => (
                                 <TableRow key={item.id}>
                                     <TableCell className="font-medium">
-                                        {item.name}
+                                        {moment(item.created_at).format(
+                                            "YYYY-MM-DD HH:mm:ss"
+                                        )}
+                                    </TableCell>
+                                    <TableCell>{item.user.name}</TableCell>
+                                    <TableCell>{item.event}</TableCell>
+                                    <TableCell>
+                                        <ExtractNotes
+                                            data={item.new_values}
+                                            event={item.event}
+                                        />
                                     </TableCell>
                                 </TableRow>
                             ))}

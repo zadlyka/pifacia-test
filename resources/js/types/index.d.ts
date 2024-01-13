@@ -1,10 +1,18 @@
+export interface Audit {
+    id: number;
+    event: string;
+    old_values: any;
+    new_values: any;
+    user: User;
+    created_at: string;
+}
 export interface Option {
     value: string;
     label: string;
 }
 
 export interface Departement {
-    id: number;
+    id: string;
     name: string;
     start_at: string;
     end_at: string;
@@ -13,7 +21,7 @@ export interface Departement {
 }
 
 export interface User {
-    id: number;
+    id: string;
     name: string;
     email: string;
     email_verified_at: string;

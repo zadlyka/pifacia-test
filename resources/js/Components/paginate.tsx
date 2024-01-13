@@ -36,9 +36,6 @@ export default function Paginate({
                     </PaginationLink>
                 </PaginationItem>
                 <PaginationItem>
-                    <PaginationEllipsis />
-                </PaginationItem>
-                <PaginationItem>
                     <PaginationNext href={paginateLink.next_page_url} />
                 </PaginationItem>
             </PaginationContent>

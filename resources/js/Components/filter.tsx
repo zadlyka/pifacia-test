@@ -38,8 +38,8 @@ export default function Filter({
                 <SelectValue placeholder={placeholder} />
             </SelectTrigger>
             <SelectContent>
-                {data.map((item) => (
-                    <SelectItem value={item.value}>{item.label}</SelectItem>
+                {data.map((item, index) => (
+                    <SelectItem value={item.value} key={index}>{item.label}</SelectItem>
                 ))}
             </SelectContent>
         </Select>

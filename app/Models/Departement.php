@@ -3,14 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Departement extends Model
+class Departement extends Model implements Auditable
 {
     use HasFactory, SoftDeletes, HasUuids;
+    use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
         'name',
