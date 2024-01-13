@@ -29,6 +29,15 @@ export interface Division {
     permissions: Option[];
 }
 
+export interface Employee {
+    id: string;
+    name: string;
+    start_at: string;
+    end_at: string;
+    actived: boolean;
+    permissions: Option[];
+}
+
 export interface User {
     id: string;
     name: string;

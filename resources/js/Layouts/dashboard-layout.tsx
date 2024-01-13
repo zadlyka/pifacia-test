@@ -32,6 +32,12 @@ export default function DashboardLayout({
                     icon: Grid2X2,
                     active: route().current("division"),
                 },
+                {
+                    name: "Employee",
+                    href: route("employee"),
+                    icon: Grid2X2,
+                    active: route().current("employee"),
+                },
             ],
         },
     ];

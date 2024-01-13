@@ -5,8 +5,9 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Database\Seeders\UserSeeder;
-use Database\Seeders\DepartementSeeder;
 use Database\Seeders\DivisionSeeder;
+use Database\Seeders\EmployeeSeeder;
+use Database\Seeders\DepartementSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,6 +20,7 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             DepartementSeeder::class,
             DivisionSeeder::class,
+            EmployeeSeeder::class,
         ]);
     }
 }
