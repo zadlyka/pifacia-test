@@ -21,10 +21,10 @@ export default function DashboardLayout({
                     active: route().current("dashboard"),
                 },
                 {
-                    name: "Basic",
-                    href: route("basic"),
+                    name: "Departement",
+                    href: route("departement"),
                     icon: Grid2X2,
-                    active: route().current("basic"),
+                    active: route().current("departement"),
                 },
             ],
         },

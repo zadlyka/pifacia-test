@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Basic;
+namespace App\Http\Requests\Departement;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreBasicRequest extends FormRequest
+class StoreDepartementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,6 +23,10 @@ class StoreBasicRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+            'start_at' => ['required', 'date_format:Y-m-d H:i:s'],
+            'end_at' => ['required', 'date_format:Y-m-d H:i:s'],
+            'actived' => ['required', 'boolean'],
+            'permissions' => ['nullable', 'array'],
         ];
     }
 }

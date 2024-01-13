@@ -1,0 +1,126 @@
+import { Head, Link } from "@inertiajs/react";
+import { Departement, PageProps } from "@/types";
+import DashboardLayout from "@/Layouts/dashboard-layout";
+import { buttonVariants } from "@/Components/ui/button";
+import {
+    Table,
+    TableBody,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/Components/ui/table";
+
+export default function Show({
+    auth,
+    departement,
+    audit
+}: PageProps<{ departement: Departement, audit: any }>) {
+    console.log(audit);
+    
+    return (
+        <DashboardLayout user={auth.user}>
+            <Head title="Departement" />
+            <div className="p-4">
+                <div className="mx-auto space-y-4 max-w-7xl sm:px-6 lg:px-8">
+                    <div className="inline-flex justify-between w-full">
+                        <div className="space-y-1">
+                            <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
+                                Departement
+                            </h2>
+                            <p className="text-xs sm:text-sm text-muted-foreground">
+                                A detail of your departement.
+                            </p>
+                        </div>
+
+                        <Link
+                            href={route("departement.edit", departement.id)}
+                            className={buttonVariants()}
+                        >
+                            Edit
+                        </Link>
+                    </div>
+
+                    <div className="space-y-2">
+                        <div className="flex flex-row">
+                            <dt className="text-sm font-medium w-36 text-muted-foreground md:text-base">
+                                Name
+                            </dt>
+                            <dd className="font-medium">
+                                {departement.name}
+                            </dd>
+                        </div>
+                        <div className="flex flex-row">
+                            <dt className="text-sm font-medium w-36 text-muted-foreground md:text-base">
+                                Start At
+                            </dt>
+                            <dd className="font-medium">
+                                {departement.start_at}
+                            </dd>
+                        </div>
+                        <div className="flex flex-row">
+                            <dt className="text-sm font-medium w-36 text-muted-foreground md:text-base">
+                                End At
+                            </dt>
+                            <dd className="font-medium">
+                                {departement.end_at}
+                            </dd>
+                        </div>
+                        <div className="flex flex-row">
+                            <dt className="text-sm font-medium w-36 text-muted-foreground md:text-base">
+                                Actived
+                            </dt>
+                            <dd className="font-medium">
+                                {departement.actived ? "Actived" : "Inactived"}
+                            </dd>
+                        </div>
+                        <div className="flex flex-row">
+                            <dt className="text-sm font-medium w-36 text-muted-foreground md:text-base">
+                                Permissions
+                            </dt>
+                            <dd className="font-medium">
+                                <ul>
+                                    {departement.permissions?.map(
+                                        (permission, index) => (
+                                            <li key={index}>
+                                                {permission.label}
+                                            </li>
+                                        )
+                                    )}
+                                </ul>
+                            </dd>
+                        </div>
+                    </div>
+
+                    <div className="inline-flex justify-between w-full">
+                        <div className="space-y-1">
+                            <h2 className="text-xl font-semibold tracking-tight sm:text-2xl">
+                                History
+                            </h2>
+                            <p className="text-xs sm:text-sm text-muted-foreground">
+                                A List of data change history.
+                            </p>
+                        </div>
+                    </div>
+
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Name</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {[]?.map((item: Departement) => (
+                                <TableRow key={item.id}>
+                                    <TableCell className="font-medium">
+                                        {item.name}
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </div>
+            </div>
+        </DashboardLayout>
+    );
+}

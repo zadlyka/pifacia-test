@@ -36,4 +36,4 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
-require __DIR__.'/basic.php';
+require __DIR__.'/departement.php';

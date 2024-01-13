@@ -2,17 +2,17 @@
 
 namespace Database\Seeders;
 
-use App\Models\Basic;
+use App\Models\Departement;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class BasicSeeder extends Seeder
+class DepartementSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Basic::factory(3)->create();
+        Departement::factory(3)->create();
     }
 }

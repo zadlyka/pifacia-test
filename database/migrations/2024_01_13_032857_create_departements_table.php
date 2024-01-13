@@ -11,10 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('basics', function (Blueprint $table) {
-            $table->id();
+        Schema::create('departements', function (Blueprint $table) {
+            $table->uuid('id')->primary();
             $table->string('name');
+            $table->dateTime('start_at')->default(now());
+            $table->dateTime('end_at')->default(now());
+            $table->boolean('actived')->default(true);
+            $table->json('permissions')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -23,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('basics');
+        Schema::dropIfExists('departements');
     }
 };

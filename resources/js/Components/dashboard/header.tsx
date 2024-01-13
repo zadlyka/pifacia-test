@@ -31,7 +31,7 @@ export function Header({
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        get(route("basic"));
+        get(route().current() ?? "");
     };
 
     return (
