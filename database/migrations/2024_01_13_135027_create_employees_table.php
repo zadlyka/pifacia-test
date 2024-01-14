@@ -19,6 +19,7 @@ return new class extends Migration
             $table->dateTime('end_at')->default(now());
             $table->boolean('actived')->default(true);
             $table->json('permissions')->nullable();
+            $table->string('file')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->foreign('division_id')->references('id')->on('divisions')->onDelete('cascade');

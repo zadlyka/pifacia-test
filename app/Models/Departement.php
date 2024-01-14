@@ -20,6 +20,7 @@ class Departement extends Model implements Auditable
         'end_at',
         'actived',
         'permissions',
+        'file',
     ];
 
     protected $casts = [

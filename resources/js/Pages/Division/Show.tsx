@@ -65,7 +65,9 @@ export default function Show({
                             <dt className="text-sm font-medium w-36 text-muted-foreground md:text-base">
                                 Departement
                             </dt>
-                            <dd className="font-medium">{division.departement.name}</dd>
+                            <dd className="font-medium">
+                                {division.departement.name}
+                            </dd>
                         </div>
                         <div className="flex flex-row">
                             <dt className="text-sm font-medium w-36 text-muted-foreground md:text-base">
@@ -101,6 +103,23 @@ export default function Show({
                                         )
                                     )}
                                 </ul>
+                            </dd>
+                        </div>
+                        <div className="flex flex-row">
+                            <dt className="text-sm font-medium w-36 text-muted-foreground md:text-base">
+                                File
+                            </dt>
+                            <dd className="font-medium">
+                                {division.file ? (
+                                    <a
+                                        className="text-blue-600"
+                                        href={division.file}
+                                    >
+                                        Download
+                                    </a>
+                                ) : (
+                                    ""
+                                )}
                             </dd>
                         </div>
                     </div>

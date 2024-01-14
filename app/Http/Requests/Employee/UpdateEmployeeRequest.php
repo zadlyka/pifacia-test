@@ -28,6 +28,7 @@ class UpdateEmployeeRequest extends FormRequest
             'end_at' => ['required', 'date_format:Y-m-d H:i:s'],
             'actived' => ['required', 'boolean'],
             'permissions' => ['nullable', 'array'],
+            'file' => ['nullable'],
         ];
     }
 }

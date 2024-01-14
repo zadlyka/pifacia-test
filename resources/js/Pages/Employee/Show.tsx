@@ -105,6 +105,23 @@ export default function Show({
                                 </ul>
                             </dd>
                         </div>
+                        <div className="flex flex-row">
+                            <dt className="text-sm font-medium w-36 text-muted-foreground md:text-base">
+                                File
+                            </dt>
+                            <dd className="font-medium">
+                                {employee.file ? (
+                                    <a
+                                        className="text-blue-600"
+                                        href={employee.file}
+                                    >
+                                        Download
+                                    </a>
+                                ) : (
+                                    ""
+                                )}
+                            </dd>
+                        </div>
                     </div>
 
                     <div className="inline-flex justify-between w-full">

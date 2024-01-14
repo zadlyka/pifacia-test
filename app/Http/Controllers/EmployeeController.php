@@ -8,6 +8,7 @@ use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Exports\ExportEmployee;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Employee\StoreEmployeeRequest;
 use App\Http\Requests\Employee\UpdateEmployeeRequest;
@@ -68,6 +69,18 @@ class EmployeeController extends Controller
     public function store(StoreEmployeeRequest $request)
     {
         $data = $request->safe()->all();
+        $file = $request->file('file');
+
+        if ($file) {
+            $request->validate([
+                'file' => ['max:500', 'min:100', 'mimetypes:application/pdf'],
+            ]);
+
+            $path = $file->store('file', 'public');
+            $url = Storage::disk('public')->url($path);
+            $data['file'] = $url;
+        }
+        
         Employee::create($data);
         return Redirect::route('employee');
     }
@@ -113,6 +126,18 @@ class EmployeeController extends Controller
     public function update(UpdateEmployeeRequest $request, Employee $employee)
     {
         $data = $request->safe()->all();
+        $file = $request->file('file');
+
+        if ($file) {
+            $request->validate([
+                'file' => ['max:500', 'min:100', 'mimetypes:application/pdf'],
+            ]);
+
+            $path = $file->store('file', 'public');
+            $url = Storage::disk('public')->url($path);
+            $data['file'] = $url;
+        }
+        
         $employee->update($data);
         return Redirect::route('employee');
     }

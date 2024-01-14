@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
-use App\Exports\ExportDepartement;
 use App\Models\Departement;
 use Illuminate\Http\Request;
+use App\Exports\ExportDepartement;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Departement\StoreDepartementRequest;
 use App\Http\Requests\Departement\UpdateDepartementRequest;
@@ -63,6 +64,18 @@ class DepartementController extends Controller
     public function store(StoreDepartementRequest $request)
     {
         $data = $request->safe()->all();
+        $file = $request->file('file');
+
+        if ($file) {
+            $request->validate([
+                'file' => ['max:500', 'min:100', 'mimetypes:application/pdf'],
+            ]);
+
+            $path = $file->store('file', 'public');
+            $url = Storage::disk('public')->url($path);
+            $data['file'] = $url;
+        }
+
         Departement::create($data);
         return Redirect::route('departement');
     }
@@ -107,6 +120,18 @@ class DepartementController extends Controller
     public function update(UpdateDepartementRequest $request, Departement $departement)
     {
         $data = $request->safe()->all();
+        $file = $request->file('file');
+
+        if ($file) {
+            $request->validate([
+                'file' => ['max:500', 'min:100', 'mimetypes:application/pdf'],
+            ]);
+
+            $path = $file->store('file', 'public');
+            $url = Storage::disk('public')->url($path);
+            $data['file'] = $url;
+        }
+
         $departement->update($data);
         return Redirect::route('departement');
     }
@@ -122,6 +147,6 @@ class DepartementController extends Controller
 
     public function export()
     {
-        return Excel::download(new ExportDepartement, now().' Departements.xlsx');
+        return Excel::download(new ExportDepartement, now() . ' Departements.xlsx');
     }
 }

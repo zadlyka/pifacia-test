@@ -24,6 +24,7 @@ export interface Departement {
     end_at: string;
     actived: boolean;
     permissions: Option[];
+    file: string;
 }
 
 export interface Division {
@@ -34,6 +35,7 @@ export interface Division {
     end_at: string;
     actived: boolean;
     permissions: Option[];
+    file: string;
     departement: Departement;
 }
 
@@ -45,6 +47,7 @@ export interface Employee {
     end_at: string;
     actived: boolean;
     permissions: Option[];
+    file: string;
     division: Division;
 }
 

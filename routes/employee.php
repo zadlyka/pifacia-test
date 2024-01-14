@@ -20,8 +20,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/employee', [EmployeeController::class, 'store'])->name('employee.store');
 
-
-    Route::patch('/employee/{employee}', [EmployeeController::class, 'update'])->name('employee.update');
+    Route::post('/employee/{employee}', [EmployeeController::class, 'update'])->name('employee.update');
 
     Route::delete('/employee/{employee}', [EmployeeController::class, 'destroy'])->name('employee.destroy');
 });

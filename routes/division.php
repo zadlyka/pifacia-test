@@ -20,8 +20,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/division', [DivisionController::class, 'store'])->name('division.store');
 
-
-    Route::patch('/division/{division}', [DivisionController::class, 'update'])->name('division.update');
+    Route::post('/division/{division}', [DivisionController::class, 'update'])->name('division.update');
 
     Route::delete('/division/{division}', [DivisionController::class, 'destroy'])->name('division.destroy');
 });

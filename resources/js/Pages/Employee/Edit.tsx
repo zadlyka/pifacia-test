@@ -1,6 +1,6 @@
 import moment from "moment";
 import { Head, useForm } from "@inertiajs/react";
-import { FormEventHandler, useEffect, useState } from "react";
+import { FormEventHandler, useEffect, useRef, useState } from "react";
 import { Division, Employee, Option, PageProps } from "@/types";
 import DashboardLayout from "@/Layouts/dashboard-layout";
 import {
@@ -43,9 +43,10 @@ function EditForm({
     options: { divisions: Division[]; permissions: Option[] };
     className?: string;
 }) {
+    const inputRef = useRef(null);
     const divisions = options.divisions;
     const optionsPermissions = options.permissions;
-    const { data, setData, patch, errors, processing, recentlySuccessful } =
+    const { data, setData, post, errors, processing, recentlySuccessful } =
         useForm({
             division_id: employee.division_id,
             name: employee.name,
@@ -53,83 +54,92 @@ function EditForm({
             end_at: moment(employee.end_at).format("YYYY-MM-DD HH:mm:ss"),
             actived: employee.actived,
             permissions: employee.permissions,
+            file: employee.file,
         });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        patch(route("employee.update", employee.id));
+        post(route("employee.update", employee.id));
     };
 
     return (
         <form onSubmit={submit} className={cn(className, "space-y-6")}>
-            <div>
-                <Label htmlFor="name">Name</Label>
-                <Input
-                    id="name"
-                    type="text"
-                    name="name"
-                    value={data.name}
-                    className="block w-full mt-1"
-                    onChange={(e) => setData("name", e.target.value)}
-                />
-                <InputError message={errors.name} className="mt-2" />
+            <div className="grid grid-cols-2 gap-2">
+                <div>
+                    <Label htmlFor="name">Name</Label>
+                    <Input
+                        id="name"
+                        type="text"
+                        name="name"
+                        value={data.name}
+                        className="block w-full mt-1"
+                        onChange={(e) => setData("name", e.target.value)}
+                    />
+                    <InputError message={errors.name} className="mt-2" />
+                </div>
+
+                <div>
+                    <Label htmlFor="division_id">Division</Label>
+                    <ShadcnSelect
+                        onValueChange={(value) => setData("division_id", value)}
+                        defaultValue={data.division_id}
+                    >
+                        <SelectTrigger className="w-full mt-1">
+                            <SelectValue placeholder="Select a division" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {divisions.map((item) => (
+                                <SelectItem key={item.id} value={item.id}>
+                                    {item.name}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </ShadcnSelect>
+                    <InputError message={errors.division_id} className="mt-2" />
+                </div>
             </div>
 
-            <div>
-                <Label htmlFor="division_id">Division</Label>
-                <ShadcnSelect
-                    onValueChange={(value) => setData("division_id", value)}
-                    defaultValue={data.division_id}
-                >
-                    <SelectTrigger>
-                        <SelectValue placeholder="Select a division" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {divisions.map((item) => (
-                            <SelectItem key={item.id} value={item.id}>
-                                {item.name}
-                            </SelectItem>
-                        ))}
-                    </SelectContent>
-                </ShadcnSelect>
-                <InputError message={errors.division_id} className="mt-2" />
-            </div>
+            <div className="grid grid-cols-2 gap-2">
+                <div>
+                    <Label htmlFor="start_at">Start At</Label>
+                    <Input
+                        id="start_at"
+                        type="datetime-local"
+                        name="start_at"
+                        value={data.start_at}
+                        className="block w-full mt-1"
+                        onChange={(e) =>
+                            setData(
+                                "start_at",
+                                moment(e.target.value).format(
+                                    "YYYY-MM-DD HH:mm:ss"
+                                )
+                            )
+                        }
+                    />
+                    <InputError message={errors.start_at} className="mt-2" />
+                </div>
 
-            <div>
-                <Label htmlFor="start_at">Start At</Label>
-                <Input
-                    id="start_at"
-                    type="datetime-local"
-                    name="start_at"
-                    value={data.start_at}
-                    className="block w-full mt-1"
-                    onChange={(e) =>
-                        setData(
-                            "start_at",
-                            moment(e.target.value).format("YYYY-MM-DD HH:mm:ss")
-                        )
-                    }
-                />
-                <InputError message={errors.start_at} className="mt-2" />
-            </div>
-
-            <div>
-                <Label htmlFor="end_at">End At</Label>
-                <Input
-                    id="end_at"
-                    type="datetime-local"
-                    name="end_at"
-                    value={data.end_at}
-                    className="block w-full mt-1"
-                    onChange={(e) =>
-                        setData(
-                            "end_at",
-                            moment(e.target.value).format("YYYY-MM-DD HH:mm:ss")
-                        )
-                    }
-                />
-                <InputError message={errors.end_at} className="mt-2" />
+                <div>
+                    <Label htmlFor="end_at">End At</Label>
+                    <Input
+                        id="end_at"
+                        type="datetime-local"
+                        name="end_at"
+                        value={data.end_at}
+                        className="block w-full mt-1"
+                        onChange={(e) =>
+                            setData(
+                                "end_at",
+                                moment(e.target.value).format(
+                                    "YYYY-MM-DD HH:mm:ss"
+                                )
+                            )
+                        }
+                    />
+                    <InputError message={errors.end_at} className="mt-2" />
+                </div>
             </div>
 
             <div>
@@ -159,6 +169,49 @@ function EditForm({
                     onChange={(value) => setData("permissions", value as any)}
                 />
                 <InputError message={errors.permissions} className="mt-2" />
+            </div>
+
+            <div>
+                <Label htmlFor="file">File</Label>
+                <Input
+                    id="file"
+                    type="file"
+                    name="file"
+                    className="block w-full mt-1"
+                    ref={inputRef}
+                    onChange={(e) =>
+                        setData(
+                            "file",
+                            //@ts-ignore
+                            e.target.files[0]
+                        )
+                    }
+                />
+
+                <InputError message={errors.file} className="mt-2" />
+
+                {data.file && (
+                    <div className="flex items-center justify-between mt-2 space-x-2">
+                        <a className="text-blue-600" href={data.file}>
+                            Download
+                        </a>
+
+                        <Button
+                            onClick={() => {
+                                setData("file", "");
+                                if (inputRef.current) {
+                                    //@ts-ignore
+                                    inputRef.current.value = null;
+                                }
+                            }}
+                            type="button"
+                            size={"sm"}
+                            variant={"destructive"}
+                        >
+                            Delete
+                        </Button>
+                    </div>
+                )}
             </div>
 
             <Button className="w-full" disabled={processing}>

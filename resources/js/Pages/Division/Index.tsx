@@ -125,6 +125,9 @@ export default function Index({
                                 <TableHead className="hidden sm:table-cell">
                                     Permissions
                                 </TableHead>
+                                <TableHead className="hidden sm:table-cell">
+                                    File
+                                </TableHead>
                                 <TableHead>Actived</TableHead>
                                 <TableHead>Action</TableHead>
                             </TableRow>
@@ -154,6 +157,16 @@ export default function Index({
                                                 )
                                             )}
                                         </ul>
+                                    </TableCell>
+                                    <TableCell className="hidden font-medium sm:table-cell">
+                                        {item.file && (
+                                            <a
+                                                className="text-blue-600"
+                                                href={item.file}
+                                            >
+                                                Download
+                                            </a>
+                                        )}
                                     </TableCell>
                                     <TableCell className="font-medium">
                                         {item.actived ? "Actived" : "Inactived"}

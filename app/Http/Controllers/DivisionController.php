@@ -8,6 +8,7 @@ use App\Models\Departement;
 use Illuminate\Http\Request;
 use App\Exports\ExportDivision;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Division\StoreDivisionRequest;
 use App\Http\Requests\Division\UpdateDivisionRequest;
@@ -68,6 +69,18 @@ class DivisionController extends Controller
     public function store(StoreDivisionRequest $request)
     {
         $data = $request->safe()->all();
+        $file = $request->file('file');
+
+        if ($file) {
+            $request->validate([
+                'file' => ['max:500', 'min:100', 'mimetypes:application/pdf'],
+            ]);
+
+            $path = $file->store('file', 'public');
+            $url = Storage::disk('public')->url($path);
+            $data['file'] = $url;
+        }
+
         Division::create($data);
         return Redirect::route('division');
     }
@@ -113,6 +126,18 @@ class DivisionController extends Controller
     public function update(UpdateDivisionRequest $request, Division $division)
     {
         $data = $request->safe()->all();
+        $file = $request->file('file');
+
+        if ($file) {
+            $request->validate([
+                'file' => ['max:500', 'min:100', 'mimetypes:application/pdf'],
+            ]);
+
+            $path = $file->store('file', 'public');
+            $url = Storage::disk('public')->url($path);
+            $data['file'] = $url;
+        }
+
         $division->update($data);
         return Redirect::route('division');
     }

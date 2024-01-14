@@ -20,8 +20,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/departement', [DepartementController::class, 'store'])->name('departement.store');
 
-
-    Route::patch('/departement/{departement}', [DepartementController::class, 'update'])->name('departement.update');
+    Route::post('/departement/{departement}', [DepartementController::class, 'update'])->name('departement.update');
 
     Route::delete('/departement/{departement}', [DepartementController::class, 'destroy'])->name('departement.destroy');
 });
