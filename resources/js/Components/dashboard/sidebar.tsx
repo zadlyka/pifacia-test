@@ -43,7 +43,7 @@ export function Sidebar({
         <div className={cn("flex flex-col gap-4 p-4 h-screen", className)}>
             <div className="flex justify-center w-full">
                 <Link href="/">
-                    <ApplicationLogo className="w-20 h-20 text-gray-500 fill-current" />
+                    <ApplicationLogo />
                 </Link>
             </div>
 

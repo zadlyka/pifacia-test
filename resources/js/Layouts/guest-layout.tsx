@@ -8,7 +8,7 @@ export default function GuestLayout({ children }: PropsWithChildren) {
             <div className="w-full px-8 py-6 overflow-hidden bg-white shadow-md sm:max-w-md sm:rounded-lg">
                 <div className="flex justify-center w-full">
                     <Link href="/">
-                        <ApplicationLogo className="w-20 h-20 text-gray-500 fill-current" />
+                        <ApplicationLogo/>
                     </Link>
                 </div>
                 {children}
