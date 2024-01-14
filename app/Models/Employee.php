@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Division;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,6 +16,7 @@ class Employee extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
+        'division_id',
         'name',
         'start_at',
         'end_at',
@@ -25,6 +27,15 @@ class Employee extends Model implements Auditable
     protected $casts = [
         'actived' => 'boolean',
         'permissions' => 'array',
+    ];
+
+    public function division()
+    {
+        return $this->belongsTo(Division::class, 'division_id');
+    }
+
+    protected $with = [
+        'division',
     ];
 
     public function scopeSearch(Builder $query, $value)

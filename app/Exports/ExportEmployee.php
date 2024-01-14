@@ -11,19 +11,14 @@ class ExportEmployee implements FromCollection, WithHeadings, WithMapping
 {
     public function collection()
     {
-        return Employee::select(
-            'name',
-            'start_at',
-            'end_at',
-            'permissions',
-            'actived'
-        )->get();
+        return Employee::get();
     }
 
     public function map($employee): array
     {
         return [
             $employee->name,
+            $employee->division->name,
             $employee->start_at,
             $employee->end_at,
             $this->extractPermissions($employee->permissions),
@@ -35,9 +30,10 @@ class ExportEmployee implements FromCollection, WithHeadings, WithMapping
     {
         return [
             "Name",
+            "Division",
             "Start At",
             "End At",
-            "Permission",
+            "Permissions",
             "Actived"
         ];
     }

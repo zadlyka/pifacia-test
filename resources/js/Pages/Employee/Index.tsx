@@ -113,6 +113,9 @@ export default function Index({
                             <TableRow>
                                 <TableHead>Name</TableHead>
                                 <TableHead className="hidden sm:table-cell">
+                                    Division
+                                </TableHead>
+                                <TableHead className="hidden sm:table-cell">
                                     Start At
                                 </TableHead>
                                 <TableHead className="hidden sm:table-cell">
@@ -130,6 +133,9 @@ export default function Index({
                                 <TableRow key={item.id}>
                                     <TableCell className="font-medium">
                                         {item.name}
+                                    </TableCell>
+                                    <TableCell className="hidden font-medium sm:table-cell">
+                                        {item.division.name}
                                     </TableCell>
                                     <TableCell className="hidden font-medium sm:table-cell">
                                         {item.start_at}

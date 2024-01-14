@@ -1,7 +1,7 @@
 import moment from "moment";
 import { Head, useForm } from "@inertiajs/react";
 import { FormEventHandler, useEffect, useState } from "react";
-import { PageProps } from "@/types";
+import { Departement, Option, PageProps } from "@/types";
 import DashboardLayout from "@/Layouts/dashboard-layout";
 import {
     Dialog,
@@ -26,16 +26,27 @@ import { Input } from "@/Components/ui/input";
 import { Checkbox } from "@/Components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import Select from "react-select";
+import {
+    Select as ShadcnSelect,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/Components/ui/select";
 
-export const optionsDivision = [
-    { value: "0", label: "Manage All" },
-    { value: "100", label: "Manage Data" },
-    { value: "200", label: "Manage Member" },
-];
+function AddForm({
+    options,
+    className,
+}: {
+    options: { departements: Departement[]; permissions: Option[] };
+    className?: string;
+}) {
+    const departements = options.departements;
+    const optionsPermissions = options.permissions;
 
-function AddForm({ className }: { className?: string }) {
     const { data, setData, post, errors, processing, recentlySuccessful } =
         useForm({
+            departement_id: "",
             name: "",
             start_at: "",
             end_at: "",
@@ -62,6 +73,26 @@ function AddForm({ className }: { className?: string }) {
                     onChange={(e) => setData("name", e.target.value)}
                 />
                 <InputError message={errors.name} className="mt-2" />
+            </div>
+
+            <div>
+                <Label htmlFor="departement_id">Departement</Label>
+                <ShadcnSelect
+                    onValueChange={(value) => setData("departement_id", value)}
+                    defaultValue={data.departement_id}
+                >
+                    <SelectTrigger>
+                        <SelectValue placeholder="Select a departement" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {departements.map((item) => (
+                            <SelectItem key={item.id} value={item.id}>
+                                {item.name}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </ShadcnSelect>
+                <InputError message={errors.departement_id} className="mt-2" />
             </div>
 
             <div>
@@ -121,7 +152,7 @@ function AddForm({ className }: { className?: string }) {
                     id="permissions"
                     name="permissions"
                     isMulti
-                    options={optionsDivision}
+                    options={optionsPermissions}
                     className="basic-multi-select"
                     value={data.permissions}
                     onChange={(value) => setData("permissions", value as any)}
@@ -136,7 +167,11 @@ function AddForm({ className }: { className?: string }) {
     );
 }
 
-function DrawerDialogDemo() {
+function DrawerDialogDemo({
+    options,
+}: {
+    options: { departements: Departement[]; permissions: Option[] };
+}) {
     const [isOpen, setIsOpen] = useState(true);
     const [isDesktop, setIsDesktop] = useState(false);
 
@@ -164,7 +199,7 @@ function DrawerDialogDemo() {
                             Please fill out this form.
                         </DialogDescription>
                     </DialogHeader>
-                    <AddForm />
+                    <AddForm options={options} />
                 </DialogContent>
             </Dialog>
         );
@@ -179,7 +214,7 @@ function DrawerDialogDemo() {
                         Please fill out this form.
                     </DrawerDescription>
                 </DrawerHeader>
-                <AddForm className="px-4" />
+                <AddForm options={options} className="px-4" />
                 <DrawerFooter className="pt-2">
                     <DrawerClose asChild>
                         <Button variant="outline">Cancel</Button>
@@ -190,13 +225,18 @@ function DrawerDialogDemo() {
     );
 }
 
-export default function Create({ auth }: PageProps) {
+export default function Create({
+    auth,
+    options,
+}: PageProps<{
+    options: { departements: Departement[]; permissions: Option[] };
+}>) {
     return (
         <DashboardLayout user={auth.user}>
             <Head title="Division" />
             <div className="p-4">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <DrawerDialogDemo />
+                    <DrawerDialogDemo options={options} />
                 </div>
             </div>
         </DashboardLayout>

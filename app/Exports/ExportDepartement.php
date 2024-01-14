@@ -37,7 +37,7 @@ class ExportDepartement implements FromCollection, WithHeadings, WithMapping
             "Name",
             "Start At",
             "End At",
-            "Permission",
+            "Permissions",
             "Actived"
         ];
     }

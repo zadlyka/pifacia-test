@@ -1,7 +1,7 @@
 import moment from "moment";
 import { Head, useForm } from "@inertiajs/react";
 import { FormEventHandler, useEffect, useState } from "react";
-import { Division, PageProps } from "@/types";
+import { Departement, Division, Option, PageProps } from "@/types";
 import DashboardLayout from "@/Layouts/dashboard-layout";
 import {
     Dialog,
@@ -26,21 +26,31 @@ import { Input } from "@/Components/ui/input";
 import { Checkbox } from "@/Components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import Select from "react-select";
-import { optionsDivision } from "./Create";
+import {
+    Select as ShadcnSelect,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/Components/ui/select";
 
 function EditForm({
     division,
+    options,
     className,
 }: {
     division: Division;
+    options: { departements: Departement[]; permissions: Option[] };
     className?: string;
 }) {
+    const departements = options.departements;
+    const optionsPermissions = options.permissions;
+
     const { data, setData, patch, errors, processing, recentlySuccessful } =
         useForm({
+            departement_id: division.departement_id,
             name: division.name,
-            start_at: moment(division.start_at).format(
-                "YYYY-MM-DD HH:mm:ss"
-            ),
+            start_at: moment(division.start_at).format("YYYY-MM-DD HH:mm:ss"),
             end_at: moment(division.end_at).format("YYYY-MM-DD HH:mm:ss"),
             actived: division.actived,
             permissions: division.permissions,
@@ -65,6 +75,26 @@ function EditForm({
                     onChange={(e) => setData("name", e.target.value)}
                 />
                 <InputError message={errors.name} className="mt-2" />
+            </div>
+
+            <div>
+                <Label htmlFor="departement_id">Departement</Label>
+                <ShadcnSelect
+                    onValueChange={(value) => setData("departement_id", value)}
+                    defaultValue={data.departement_id}
+                >
+                    <SelectTrigger>
+                        <SelectValue placeholder="Select a departement" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {departements.map((item) => (
+                            <SelectItem key={item.id} value={item.id}>
+                                {item.name}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </ShadcnSelect>
+                <InputError message={errors.departement_id} className="mt-2" />
             </div>
 
             <div>
@@ -124,7 +154,7 @@ function EditForm({
                     id="permissions"
                     name="permissions"
                     isMulti
-                    options={optionsDivision}
+                    options={optionsPermissions}
                     className="basic-multi-select"
                     value={data.permissions}
                     onChange={(value) => setData("permissions", value as any)}
@@ -139,7 +169,13 @@ function EditForm({
     );
 }
 
-function DrawerDialogDemo({ division }: { division: Division }) {
+function DrawerDialogDemo({
+    division,
+    options,
+}: {
+    division: Division;
+    options: { departements: Departement[]; permissions: Option[] };
+}) {
     const [isOpen, setIsOpen] = useState(true);
     const [isDesktop, setIsDesktop] = useState(false);
 
@@ -167,7 +203,7 @@ function DrawerDialogDemo({ division }: { division: Division }) {
                             Please fill out this form.
                         </DialogDescription>
                     </DialogHeader>
-                    <EditForm division={division} />
+                    <EditForm division={division} options={options} />
                 </DialogContent>
             </Dialog>
         );
@@ -182,7 +218,11 @@ function DrawerDialogDemo({ division }: { division: Division }) {
                         Please fill out this form.
                     </DrawerDescription>
                 </DrawerHeader>
-                <EditForm division={division} className="px-4" />
+                <EditForm
+                    division={division}
+                    options={options}
+                    className="px-4"
+                />
                 <DrawerFooter className="pt-2">
                     <DrawerClose asChild>
                         <Button variant="outline">Cancel</Button>
@@ -196,13 +236,17 @@ function DrawerDialogDemo({ division }: { division: Division }) {
 export default function Edit({
     auth,
     division,
-}: PageProps<{ division: Division }>) {
+    options,
+}: PageProps<{
+    division: Division;
+    options: { departements: Departement[]; permissions: Option[] };
+}>) {
     return (
         <DashboardLayout user={auth.user}>
             <Head title="Division" />
             <div className="p-4">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <DrawerDialogDemo division={division} />
+                    <DrawerDialogDemo division={division} options={options} />
                 </div>
             </div>
         </DashboardLayout>

@@ -1,7 +1,7 @@
 import moment from "moment";
 import { Head, useForm } from "@inertiajs/react";
 import { FormEventHandler, useEffect, useState } from "react";
-import { Departement, PageProps } from "@/types";
+import { Departement, Option, PageProps } from "@/types";
 import DashboardLayout from "@/Layouts/dashboard-layout";
 import {
     Dialog,
@@ -26,15 +26,18 @@ import { Input } from "@/Components/ui/input";
 import { Checkbox } from "@/Components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import Select from "react-select";
-import { optionsDepartement } from "./Create";
 
 function EditForm({
     departement,
+    options,
     className,
 }: {
     departement: Departement;
+    options: { permissions: Option[] };
     className?: string;
 }) {
+    const optionsPermissions = options.permissions;
+
     const { data, setData, patch, errors, processing, recentlySuccessful } =
         useForm({
             name: departement.name,
@@ -124,7 +127,7 @@ function EditForm({
                     id="permissions"
                     name="permissions"
                     isMulti
-                    options={optionsDepartement}
+                    options={optionsPermissions}
                     className="basic-multi-select"
                     value={data.permissions}
                     onChange={(value) => setData("permissions", value as any)}
@@ -139,7 +142,13 @@ function EditForm({
     );
 }
 
-function DrawerDialogDemo({ departement }: { departement: Departement }) {
+function DrawerDialogDemo({
+    departement,
+    options,
+}: {
+    departement: Departement;
+    options: { permissions: Option[] };
+}) {
     const [isOpen, setIsOpen] = useState(true);
     const [isDesktop, setIsDesktop] = useState(false);
 
@@ -167,7 +176,7 @@ function DrawerDialogDemo({ departement }: { departement: Departement }) {
                             Please fill out this form.
                         </DialogDescription>
                     </DialogHeader>
-                    <EditForm departement={departement} />
+                    <EditForm departement={departement} options={options} />
                 </DialogContent>
             </Dialog>
         );
@@ -182,7 +191,11 @@ function DrawerDialogDemo({ departement }: { departement: Departement }) {
                         Please fill out this form.
                     </DrawerDescription>
                 </DrawerHeader>
-                <EditForm departement={departement} className="px-4" />
+                <EditForm
+                    departement={departement}
+                    options={options}
+                    className="px-4"
+                />
                 <DrawerFooter className="pt-2">
                     <DrawerClose asChild>
                         <Button variant="outline">Cancel</Button>
@@ -196,13 +209,20 @@ function DrawerDialogDemo({ departement }: { departement: Departement }) {
 export default function Edit({
     auth,
     departement,
-}: PageProps<{ departement: Departement }>) {
+    options,
+}: PageProps<{
+    departement: Departement;
+    options: { permissions: Option[] };
+}>) {
     return (
         <DashboardLayout user={auth.user}>
             <Head title="Departement" />
             <div className="p-4">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <DrawerDialogDemo departement={departement} />
+                    <DrawerDialogDemo
+                        departement={departement}
+                        options={options}
+                    />
                 </div>
             </div>
         </DashboardLayout>

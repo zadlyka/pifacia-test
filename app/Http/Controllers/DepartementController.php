@@ -36,7 +36,20 @@ class DepartementController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Departement/Create');
+        return Inertia::render('Departement/Create', [
+            'options' => [
+                'permissions' => [
+                    (object) [
+                        'value' => "0",
+                        'label' => "Manage All"
+                    ],
+                    (object) [
+                        'value' => "100",
+                        'label' => "Manage Data"
+                    ]
+                ]
+            ]
+        ]);
     }
 
     /**
@@ -68,6 +81,18 @@ class DepartementController extends Controller
     {
         return Inertia::render('Departement/Edit',  [
             'departement' => $departement,
+            'options' => [
+                'permissions' => [
+                    (object) [
+                        'value' => "0",
+                        'label' => "Manage All"
+                    ],
+                    (object) [
+                        'value' => "100",
+                        'label' => "Manage Data"
+                    ]
+                ]
+            ]
         ]);
     }
 
@@ -92,6 +117,6 @@ class DepartementController extends Controller
 
     public function export()
     {
-        return Excel::download(new ExportDepartement, 'departements.xlsx');
+        return Excel::download(new ExportDepartement, now().' Departements.xlsx');
     }
 }

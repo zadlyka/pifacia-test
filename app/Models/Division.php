@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Departement;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Contracts\Auditable;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -15,6 +16,7 @@ class Division extends Model implements Auditable
     use \OwenIt\Auditing\Auditable;
 
     protected $fillable = [
+        'departement_id',
         'name',
         'start_at',
         'end_at',
@@ -25,6 +27,15 @@ class Division extends Model implements Auditable
     protected $casts = [
         'actived' => 'boolean',
         'permissions' => 'array',
+    ];
+
+    public function departement()
+    {
+        return $this->belongsTo(Departement::class, 'departement_id');
+    }
+
+    protected $with = [
+        'departement',
     ];
 
     public function scopeSearch(Builder $query, $value)

@@ -22,6 +22,7 @@ class UpdateEmployeeRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'division_id' => ['required', 'uuid', 'exists:divisions,id'],
             'name' => ['required', 'string', 'max:255'],
             'start_at' => ['required', 'date_format:Y-m-d H:i:s'],
             'end_at' => ['required', 'date_format:Y-m-d H:i:s'],

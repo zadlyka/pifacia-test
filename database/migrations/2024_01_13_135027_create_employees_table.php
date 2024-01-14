@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->uuid('division_id');
             $table->string('name');
             $table->dateTime('start_at')->default(now());
             $table->dateTime('end_at')->default(now());
@@ -20,6 +21,7 @@ return new class extends Migration
             $table->json('permissions')->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('division_id')->references('id')->on('divisions')->onDelete('cascade');
         });
     }
 

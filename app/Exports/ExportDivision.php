@@ -11,19 +11,14 @@ class ExportDivision implements FromCollection, WithHeadings, WithMapping
 {
     public function collection()
     {
-        return Division::select(
-            'name',
-            'start_at',
-            'end_at',
-            'permissions',
-            'actived'
-        )->get();
+        return Division::get();
     }
 
     public function map($division): array
     {
         return [
             $division->name,
+            $division->departement->name,
             $division->start_at,
             $division->end_at,
             $this->extractPermissions($division->permissions),
@@ -35,9 +30,10 @@ class ExportDivision implements FromCollection, WithHeadings, WithMapping
     {
         return [
             "Name",
+            "Departement",
             "Start At",
             "End At",
-            "Permission",
+            "Permissions",
             "Actived"
         ];
     }

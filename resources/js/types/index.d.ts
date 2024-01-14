@@ -28,20 +28,24 @@ export interface Departement {
 
 export interface Division {
     id: string;
+    departement_id: string;
     name: string;
     start_at: string;
     end_at: string;
     actived: boolean;
     permissions: Option[];
+    departement: Departement;
 }
 
 export interface Employee {
     id: string;
+    division_id: string;
     name: string;
     start_at: string;
     end_at: string;
     actived: boolean;
     permissions: Option[];
+    division: Division;
 }
 
 export interface User {

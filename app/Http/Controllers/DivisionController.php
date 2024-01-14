@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
-use App\Exports\ExportDivision;
 use App\Models\Division;
+use App\Models\Departement;
 use Illuminate\Http\Request;
+use App\Exports\ExportDivision;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Division\StoreDivisionRequest;
@@ -36,7 +37,21 @@ class DivisionController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Division/Create');
+        return Inertia::render('Division/Create', [
+            'options' => [
+                'departements' => Departement::get(),
+                'permissions' => [
+                    (object) [
+                        'value' => "0",
+                        'label' => "Manage All"
+                    ],
+                    (object) [
+                        'value' => "100",
+                        'label' => "Manage Data"
+                    ]
+                ]
+            ]
+        ]);
     }
 
     /**
@@ -68,6 +83,19 @@ class DivisionController extends Controller
     {
         return Inertia::render('Division/Edit',  [
             'division' => $division,
+            'options' => [
+                'departements' => Departement::get(),
+                'permissions' => [
+                    (object) [
+                        'value' => "0",
+                        'label' => "Manage All"
+                    ],
+                    (object) [
+                        'value' => "100",
+                        'label' => "Manage Data"
+                    ]
+                ]
+            ]
         ]);
     }
 
@@ -92,6 +120,6 @@ class DivisionController extends Controller
 
     public function export()
     {
-        return Excel::download(new ExportDivision, 'divisions.xlsx');
+        return Excel::download(new ExportDivision, now().' Divisions.xlsx');
     }
 }

@@ -6,8 +6,6 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Database\Seeders\RoleSeeder;
 use Database\Seeders\UserSeeder;
-use Database\Seeders\DivisionSeeder;
-use Database\Seeders\EmployeeSeeder;
 use Database\Seeders\DepartementSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,8 +19,6 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             DepartementSeeder::class,
-            DivisionSeeder::class,
-            EmployeeSeeder::class,
         ]);
     }
 }

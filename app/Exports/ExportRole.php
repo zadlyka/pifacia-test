@@ -29,7 +29,7 @@ class ExportRole implements FromCollection, WithHeadings, WithMapping
     {
         return [
             "Name",
-            "Permission",
+            "Permissions",
         ];
     }
 

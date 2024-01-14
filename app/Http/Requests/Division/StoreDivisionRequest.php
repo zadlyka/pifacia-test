@@ -22,6 +22,7 @@ class StoreDivisionRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'departement_id' => ['required', 'uuid', 'exists:departements,id'],
             'name' => ['required', 'string', 'max:255'],
             'start_at' => ['required', 'date_format:Y-m-d H:i:s'],
             'end_at' => ['required', 'date_format:Y-m-d H:i:s'],

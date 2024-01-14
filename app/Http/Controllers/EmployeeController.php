@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
-use App\Exports\ExportEmployee;
+use App\Models\Division;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use App\Exports\ExportEmployee;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\Employee\StoreEmployeeRequest;
@@ -36,7 +37,21 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Employee/Create');
+        return Inertia::render('Employee/Create', [
+            'options' => [
+                'divisions' => Division::get(),
+                'permissions' => [
+                    (object) [
+                        'value' => "0",
+                        'label' => "Manage All"
+                    ],
+                    (object) [
+                        'value' => "100",
+                        'label' => "Manage Data"
+                    ]
+                ]
+            ]
+        ]);
     }
 
     /**
@@ -68,6 +83,19 @@ class EmployeeController extends Controller
     {
         return Inertia::render('Employee/Edit',  [
             'employee' => $employee,
+            'options' => [
+                'divisions' => Division::get(),
+                'permissions' => [
+                    (object) [
+                        'value' => "0",
+                        'label' => "Manage All"
+                    ],
+                    (object) [
+                        'value' => "100",
+                        'label' => "Manage Data"
+                    ]
+                ]
+            ]
         ]);
     }
 
@@ -92,6 +120,6 @@ class EmployeeController extends Controller
 
     public function export()
     {
-        return Excel::download(new ExportEmployee, 'employees.xlsx');
+        return Excel::download(new ExportEmployee, now().' Employees.xlsx');
     }
 }

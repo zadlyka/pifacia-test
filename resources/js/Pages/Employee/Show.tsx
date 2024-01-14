@@ -63,19 +63,23 @@ export default function Show({
                         </div>
                         <div className="flex flex-row">
                             <dt className="text-sm font-medium w-36 text-muted-foreground md:text-base">
-                                Start At
+                                Division
                             </dt>
                             <dd className="font-medium">
-                                {employee.start_at}
+                                {employee.division.name}
                             </dd>
+                        </div>
+                        <div className="flex flex-row">
+                            <dt className="text-sm font-medium w-36 text-muted-foreground md:text-base">
+                                Start At
+                            </dt>
+                            <dd className="font-medium">{employee.start_at}</dd>
                         </div>
                         <div className="flex flex-row">
                             <dt className="text-sm font-medium w-36 text-muted-foreground md:text-base">
                                 End At
                             </dt>
-                            <dd className="font-medium">
-                                {employee.end_at}
-                            </dd>
+                            <dd className="font-medium">{employee.end_at}</dd>
                         </div>
                         <div className="flex flex-row">
                             <dt className="text-sm font-medium w-36 text-muted-foreground md:text-base">

@@ -33,6 +33,18 @@ class RoleSeeder extends Seeder
                 (object) [
                     'value' => Permission::Manage_Role->value,
                     'label' => str_replace("_", " ", Permission::Manage_Role->name)
+                ],
+                (object) [
+                    'value' => Permission::Manage_Departement->value,
+                    'label' => str_replace("_", " ", Permission::Manage_Departement->name)
+                ],
+                (object) [
+                    'value' => Permission::Manage_Division->value,
+                    'label' => str_replace("_", " ", Permission::Manage_Division->name)
+                ],
+                (object) [
+                    'value' => Permission::Manage_Employee->value,
+                    'label' => str_replace("_", " ", Permission::Manage_Employee->name)
                 ]
             ]
         ]);

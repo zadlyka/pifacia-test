@@ -1,7 +1,7 @@
 import moment from "moment";
 import { Head, useForm } from "@inertiajs/react";
 import { FormEventHandler, useEffect, useState } from "react";
-import { PageProps } from "@/types";
+import { Option, PageProps } from "@/types";
 import DashboardLayout from "@/Layouts/dashboard-layout";
 import {
     Dialog,
@@ -27,13 +27,15 @@ import { Checkbox } from "@/Components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import Select from "react-select";
 
-export const optionsDepartement = [
-    { value: "0", label: "Manage All" },
-    { value: "100", label: "Manage Data" },
-    { value: "200", label: "Manage Member" },
-];
+function AddForm({
+    options,
+    className,
+}: {
+    options: { permissions: Option[] };
+    className?: string;
+}) {
+    const optionsPermissions = options.permissions;
 
-function AddForm({ className }: { className?: string }) {
     const { data, setData, post, errors, processing, recentlySuccessful } =
         useForm({
             name: "",
@@ -121,7 +123,7 @@ function AddForm({ className }: { className?: string }) {
                     id="permissions"
                     name="permissions"
                     isMulti
-                    options={optionsDepartement}
+                    options={optionsPermissions}
                     className="basic-multi-select"
                     value={data.permissions}
                     onChange={(value) => setData("permissions", value as any)}
@@ -136,7 +138,7 @@ function AddForm({ className }: { className?: string }) {
     );
 }
 
-function DrawerDialogDemo() {
+function DrawerDialogDemo({ options }: { options: { permissions: Option[] } }) {
     const [isOpen, setIsOpen] = useState(true);
     const [isDesktop, setIsDesktop] = useState(false);
 
@@ -164,7 +166,7 @@ function DrawerDialogDemo() {
                             Please fill out this form.
                         </DialogDescription>
                     </DialogHeader>
-                    <AddForm />
+                    <AddForm options={options} />
                 </DialogContent>
             </Dialog>
         );
@@ -179,7 +181,7 @@ function DrawerDialogDemo() {
                         Please fill out this form.
                     </DrawerDescription>
                 </DrawerHeader>
-                <AddForm className="px-4" />
+                <AddForm options={options} className="px-4" />
                 <DrawerFooter className="pt-2">
                     <DrawerClose asChild>
                         <Button variant="outline">Cancel</Button>
@@ -190,13 +192,16 @@ function DrawerDialogDemo() {
     );
 }
 
-export default function Create({ auth }: PageProps) {
+export default function Create({
+    auth,
+    options,
+}: PageProps<{ options: { permissions: Option[] } }>) {
     return (
         <DashboardLayout user={auth.user}>
             <Head title="Departement" />
             <div className="p-4">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <DrawerDialogDemo />
+                    <DrawerDialogDemo options={options} />
                 </div>
             </div>
         </DashboardLayout>
