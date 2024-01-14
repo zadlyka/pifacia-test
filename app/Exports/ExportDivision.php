@@ -22,7 +22,8 @@ class ExportDivision implements FromCollection, WithHeadings, WithMapping
             $division->start_at,
             $division->end_at,
             $this->extractPermissions($division->permissions),
-            $division->actived ? 'Actived' : 'Inactived'
+            $division->actived ? 'Actived' : 'Inactived',
+            $division->file,
         ];
     }
 
@@ -34,7 +35,8 @@ class ExportDivision implements FromCollection, WithHeadings, WithMapping
             "Start At",
             "End At",
             "Permissions",
-            "Actived"
+            "Actived",
+            "File"
         ];
     }
 

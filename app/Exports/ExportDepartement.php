@@ -11,13 +11,7 @@ class ExportDepartement implements FromCollection, WithHeadings, WithMapping
 {
     public function collection()
     {
-        return Departement::select(
-            'name',
-            'start_at',
-            'end_at',
-            'permissions',
-            'actived'
-        )->get();
+        return Departement::get();
     }
 
     public function map($departement): array
@@ -27,7 +21,8 @@ class ExportDepartement implements FromCollection, WithHeadings, WithMapping
             $departement->start_at,
             $departement->end_at,
             $this->extractPermissions($departement->permissions),
-            $departement->actived ? 'Actived' : 'Inactived'
+            $departement->actived ? 'Actived' : 'Inactived',
+            $departement->file,
         ];
     }
 
@@ -38,7 +33,8 @@ class ExportDepartement implements FromCollection, WithHeadings, WithMapping
             "Start At",
             "End At",
             "Permissions",
-            "Actived"
+            "Actived",
+            "File"
         ];
     }
 

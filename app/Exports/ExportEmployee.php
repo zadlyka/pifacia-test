@@ -22,7 +22,8 @@ class ExportEmployee implements FromCollection, WithHeadings, WithMapping
             $employee->start_at,
             $employee->end_at,
             $this->extractPermissions($employee->permissions),
-            $employee->actived ? 'Actived' : 'Inactived'
+            $employee->actived ? 'Actived' : 'Inactived',
+            $employee->file,
         ];
     }
 
@@ -34,7 +35,8 @@ class ExportEmployee implements FromCollection, WithHeadings, WithMapping
             "Start At",
             "End At",
             "Permissions",
-            "Actived"
+            "Actived",
+            "File"
         ];
     }
 
