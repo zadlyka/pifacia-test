@@ -29,12 +29,10 @@ export default function Index({
     paginate,
     search,
     sort,
-    filter,
 }: PageProps<{
     paginate: RolePaginate;
     search?: string;
     sort?: string;
-    filter?: any;
 }>) {
     const dataSort = [
         {
@@ -46,21 +44,6 @@ export default function Index({
             label: "Name - DESC",
         },
     ];
-
-    const dataFilter = [
-        {
-            value: "true",
-            label: "Actived",
-        },
-        {
-            value: "false",
-            label: "Inactived",
-        },
-    ];
-
-    const filterActived = filter?.hasOwnProperty("actived")
-        ? filter["actived"]
-        : undefined;
 
     return (
         <DashboardLayout user={auth.user} search={search}>
@@ -78,13 +61,6 @@ export default function Index({
                         </div>
 
                         <div className="flex space-x-2">
-                            <Filter
-                                data={dataFilter}
-                                filterKey="filter[actived]"
-                                placeholder="Filter"
-                                defaultValue={filterActived}
-                            />
-
                             <Filter
                                 data={dataSort}
                                 filterKey="sort"

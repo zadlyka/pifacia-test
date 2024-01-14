@@ -26,36 +26,42 @@ export default function DashboardLayout({
                     href: route("dashboard"),
                     icon: LayoutDashboard,
                     active: route().current("dashboard"),
+                    permission: null
                 },
                 {
                     name: "Role",
                     href: route("role"),
                     icon: ShieldEllipsis,
                     active: route().current("role"),
+                    permission: '100'
                 },
                 {
                     name: "User",
                     href: route("user"),
                     icon: UserIcon,
                     active: route().current("user"),
+                    permission: '200'
                 },
                 {
                     name: "Departement",
                     href: route("departement"),
                     icon: Building2,
                     active: route().current("departement"),
+                    permission: '300'
                 },
                 {
                     name: "Division",
                     href: route("division"),
                     icon: Blocks,
                     active: route().current("division"),
+                    permission: '400'
                 },
                 {
                     name: "Employee",
                     href: route("employee"),
                     icon: Users,
                     active: route().current("employee"),
+                    permission: '500'
                 },
             ],
         },
@@ -63,7 +69,7 @@ export default function DashboardLayout({
 
     return (
         <main className="flex h-screen">
-            <Sidebar menu={menu} className="hidden w-1/4 sm:flex border-e" />
+            <Sidebar user={user} menu={menu} className="hidden w-1/4 sm:flex border-e" />
             <ScrollArea className="w-full h-screen">
                 <Header user={user} menu={menu} search={search} className="sticky top-0" />
                 <div>{children}</div>

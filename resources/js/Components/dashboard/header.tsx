@@ -49,7 +49,7 @@ export function Header({
                     <MenuIcon />
                 </SheetTrigger>
                 <SheetContent side="left">
-                    <Sidebar menu={menu} className="py-8" />
+                    <Sidebar user={user} menu={menu} className="py-8" />
                 </SheetContent>
             </Sheet>
 

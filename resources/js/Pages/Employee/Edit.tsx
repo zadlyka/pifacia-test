@@ -45,7 +45,6 @@ function EditForm({
 }) {
     const divisions = options.divisions;
     const optionsPermissions = options.permissions;
-
     const { data, setData, patch, errors, processing, recentlySuccessful } =
         useForm({
             division_id: employee.division_id,

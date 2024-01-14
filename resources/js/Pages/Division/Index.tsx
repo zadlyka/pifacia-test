@@ -1,5 +1,5 @@
 import { Head, Link } from "@inertiajs/react";
-import { Division, PageProps } from "@/types";
+import { Departement, Division, PageProps } from "@/types";
 import DashboardLayout from "@/Layouts/dashboard-layout";
 import {
     DropdownMenu,
@@ -24,17 +24,27 @@ interface DivisionPaginate extends PaginateLink {
     data: Division[];
 }
 
+function extractOptionDepartement(departements: Departement[]) {
+    const data = [];
+    for (const departement of departements) {
+        data.push({ value: departement.id, label: departement.name });
+    }
+    return data;
+}
+
 export default function Index({
     auth,
     paginate,
     search,
     sort,
     filter,
+    options,
 }: PageProps<{
     paginate: DivisionPaginate;
     search?: string;
     sort?: string;
     filter?: any;
+    options: { departements: Departement[] };
 }>) {
     const dataSort = [
         {
@@ -47,19 +57,10 @@ export default function Index({
         },
     ];
 
-    const dataFilter = [
-        {
-            value: "true",
-            label: "Actived",
-        },
-        {
-            value: "false",
-            label: "Inactived",
-        },
-    ];
+    const dataFilter = extractOptionDepartement(options.departements);
 
-    const filterActived = filter?.hasOwnProperty("actived")
-        ? filter["actived"]
+    const filterDepartementId = filter?.hasOwnProperty("departement_id")
+        ? filter["departement_id"]
         : undefined;
 
     return (
@@ -80,9 +81,9 @@ export default function Index({
                         <div className="flex space-x-2">
                             <Filter
                                 data={dataFilter}
-                                filterKey="filter[actived]"
+                                filterKey="filter[departement_id]"
                                 placeholder="Filter"
-                                defaultValue={filterActived}
+                                defaultValue={filterDepartementId}
                             />
 
                             <Filter

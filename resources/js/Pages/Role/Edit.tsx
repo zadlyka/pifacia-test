@@ -35,7 +35,6 @@ function EditForm({
     className?: string;
 }) {
     const optionsPermissions = options.permissions;
-
     const { data, setData, patch, errors, processing, recentlySuccessful } =
         useForm({
             name: role.name,

@@ -43,7 +43,6 @@ function AddForm({
 }) {
     const departements = options.departements;
     const optionsPermissions = options.permissions;
-
     const { data, setData, post, errors, processing, recentlySuccessful } =
         useForm({
             departement_id: "",

@@ -1,5 +1,5 @@
 import { Head, Link } from "@inertiajs/react";
-import { Employee, PageProps } from "@/types";
+import { Division, Employee, PageProps } from "@/types";
 import DashboardLayout from "@/Layouts/dashboard-layout";
 import {
     DropdownMenu,
@@ -24,17 +24,27 @@ interface EmployeePaginate extends PaginateLink {
     data: Employee[];
 }
 
+function extractOptionDivision(divisions: Division[]) {
+    const data = [];
+    for (const division of divisions) {
+        data.push({ value: division.id, label: division.name });
+    }
+    return data;
+}
+
 export default function Index({
     auth,
     paginate,
     search,
     sort,
     filter,
+    options,
 }: PageProps<{
     paginate: EmployeePaginate;
     search?: string;
     sort?: string;
     filter?: any;
+    options: { divisions: Division[] };
 }>) {
     const dataSort = [
         {
@@ -47,19 +57,10 @@ export default function Index({
         },
     ];
 
-    const dataFilter = [
-        {
-            value: "true",
-            label: "Actived",
-        },
-        {
-            value: "false",
-            label: "Inactived",
-        },
-    ];
+    const dataFilter = extractOptionDivision(options.divisions);
 
-    const filterActived = filter?.hasOwnProperty("actived")
-        ? filter["actived"]
+    const filterDivisionId = filter?.hasOwnProperty("division_id")
+        ? filter["division_id"]
         : undefined;
 
     return (
@@ -80,9 +81,9 @@ export default function Index({
                         <div className="flex space-x-2">
                             <Filter
                                 data={dataFilter}
-                                filterKey="filter[actived]"
+                                filterKey="filter[division_id]"
                                 placeholder="Filter"
-                                defaultValue={filterActived}
+                                defaultValue={filterDivisionId}
                             />
 
                             <Filter

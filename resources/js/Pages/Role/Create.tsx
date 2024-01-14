@@ -33,7 +33,6 @@ function AddForm({
     className?: string;
 }) {
     const optionsPermissions = options.permissions;
-
     const { data, setData, post, errors, processing, recentlySuccessful } =
         useForm({
             name: "",

@@ -33,7 +33,10 @@ class EmployeeController extends Controller
             'paginate' => $paginate,
             'search' => $search,
             'sort' => $sort,
-            'filter' => $filter
+            'filter' => $filter,
+            'options' => [
+                'divisions' => Division::get(),
+            ],
         ]);
     }
 

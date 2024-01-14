@@ -47,6 +47,10 @@ class Division extends Model implements Auditable
 
     public function scopeFilter(Builder $query, $value): void
     {
+        $query->when($value['departement_id'] ?? false, function ($query, $value) {
+            return $query->where('departement_id', $value);
+        });
+
         $query->when($value['actived'] ?? false, function ($query, $value) {
             return $query->where('actived', $value === 'true' ? 1 : 0);
         });

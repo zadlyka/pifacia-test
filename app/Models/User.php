@@ -68,6 +68,10 @@ class User extends Authenticatable implements Auditable
 
     public function scopeFilter(Builder $query, $value): void
     {
+        $query->when($value['role_id'] ?? false, function ($query, $value) {
+            return $query->where('role_id', $value);
+        });
+
         $query->when($value['created_at'] ?? false, function ($query, $value) {
             return $query->where('created_at', $value);
         });

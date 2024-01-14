@@ -33,7 +33,10 @@ class DivisionController extends Controller
             'paginate' => $paginate,
             'search' => $search,
             'sort' => $sort,
-            'filter' => $filter
+            'filter' => $filter,
+            'options' => [
+                'departements' => Departement::get(),
+            ],
         ]);
     }
 
@@ -125,6 +128,6 @@ class DivisionController extends Controller
 
     public function export()
     {
-        return Excel::download(new ExportDivision, now().' Divisions.xlsx');
+        return Excel::download(new ExportDivision, now() . ' Divisions.xlsx');
     }
 }

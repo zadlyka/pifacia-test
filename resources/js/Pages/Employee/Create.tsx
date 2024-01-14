@@ -43,7 +43,6 @@ function AddForm({
 }) {
     const divisions = options.divisions;
     const optionsPermissions = options.permissions;
-
     const { data, setData, post, errors, processing, recentlySuccessful } =
         useForm({
             division_id: "",

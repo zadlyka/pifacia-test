@@ -33,7 +33,10 @@ class UserController extends Controller
             'paginate' => $paginate,
             'search' => $search,
             'sort' => $sort,
-            'filter' => $filter
+            'filter' => $filter,
+            'options' => [
+                'roles' => Role::get(),
+            ]
         ]);
     }
 
@@ -105,6 +108,6 @@ class UserController extends Controller
 
     public function export()
     {
-        return Excel::download(new ExportUser, now().' Users.xlsx');
+        return Excel::download(new ExportUser, now() . ' Users.xlsx');
     }
 }

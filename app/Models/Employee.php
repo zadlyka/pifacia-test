@@ -47,6 +47,10 @@ class Employee extends Model implements Auditable
 
     public function scopeFilter(Builder $query, $value): void
     {
+        $query->when($value['division_id'] ?? false, function ($query, $value) {
+            return $query->where('division_id', $value);
+        });
+
         $query->when($value['actived'] ?? false, function ($query, $value) {
             return $query->where('actived', $value === 'true' ? 1 : 0);
         });

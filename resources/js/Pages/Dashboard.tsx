@@ -10,7 +10,7 @@ export default function Dashboard({ auth }: PageProps) {
             <Head title="Dashboard" />
             <div className="p-4">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    You're logged in as <strong>{role}</strong>!
+                    You're logged in as <strong>{role}</strong> !
                 </div>
             </div>
         </DashboardLayout>

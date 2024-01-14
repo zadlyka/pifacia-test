@@ -1,5 +1,5 @@
 import { Head, Link } from "@inertiajs/react";
-import { User, PageProps } from "@/types";
+import { User, PageProps, Role } from "@/types";
 import DashboardLayout from "@/Layouts/dashboard-layout";
 import {
     DropdownMenu,
@@ -24,17 +24,27 @@ interface UserPaginate extends PaginateLink {
     data: User[];
 }
 
+function extractOptionRole(roles: Role[]) {
+    const data = [];
+    for (const role of roles) {
+        data.push({ value: role.id, label: role.name });
+    }
+    return data;
+}
+
 export default function Index({
     auth,
     paginate,
     search,
     sort,
     filter,
+    options,
 }: PageProps<{
     paginate: UserPaginate;
     search?: string;
     sort?: string;
     filter?: any;
+    options: { roles: Role[] };
 }>) {
     const dataSort = [
         {
@@ -47,19 +57,10 @@ export default function Index({
         },
     ];
 
-    const dataFilter = [
-        {
-            value: "true",
-            label: "Actived",
-        },
-        {
-            value: "false",
-            label: "Inactived",
-        },
-    ];
+    const dataFilter = extractOptionRole(options.roles)
 
-    const filterActived = filter?.hasOwnProperty("actived")
-        ? filter["actived"]
+    const filterRoleId = filter?.hasOwnProperty("role_id")
+        ? filter["role_id"]
         : undefined;
 
     return (
@@ -80,9 +81,9 @@ export default function Index({
                         <div className="flex space-x-2">
                             <Filter
                                 data={dataFilter}
-                                filterKey="filter[actived]"
+                                filterKey="filter[role_id]"
                                 placeholder="Filter"
-                                defaultValue={filterActived}
+                                defaultValue={filterRoleId}
                             />
 
                             <Filter
@@ -112,8 +113,12 @@ export default function Index({
                         <TableHeader>
                             <TableRow>
                                 <TableHead>Name</TableHead>
-                                <TableHead className="hidden sm:table-cell">Email</TableHead>
-                                <TableHead className="hidden sm:table-cell">Role</TableHead>
+                                <TableHead className="hidden sm:table-cell">
+                                    Email
+                                </TableHead>
+                                <TableHead className="hidden sm:table-cell">
+                                    Role
+                                </TableHead>
                                 <TableHead>Action</TableHead>
                             </TableRow>
                         </TableHeader>

@@ -39,8 +39,6 @@ function AddForm({
     className?: string;
 }) {
     const roles = options.roles;
-
-    console.log(roles);
     const { data, setData, post, errors, processing, recentlySuccessful } =
         useForm({
             name: "",
