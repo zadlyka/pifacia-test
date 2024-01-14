@@ -14,6 +14,11 @@ use App\Http\Requests\Role\UpdateRoleRequest;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Role::class, 'role');
+    }
+
     /**
      * Display a listing of the resource.
      */

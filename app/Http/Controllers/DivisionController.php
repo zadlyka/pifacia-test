@@ -14,6 +14,11 @@ use App\Http\Requests\Division\UpdateDivisionRequest;
 
 class DivisionController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Division::class, 'division');
+    }
+
     /**
      * Display a listing of the resource.
      */

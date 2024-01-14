@@ -2,8 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Division;
 use App\Models\User;
+use App\Enums\Permission;
+use App\Models\Division;
+use App\Helpers\PermissionCheck;
 use Illuminate\Auth\Access\Response;
 
 class DivisionPolicy
@@ -13,7 +15,7 @@ class DivisionPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Read_Division->value, null);
     }
 
     /**
@@ -21,7 +23,7 @@ class DivisionPolicy
      */
     public function view(User $user, Division $division): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Read_Division->value, null);
     }
 
     /**
@@ -29,7 +31,7 @@ class DivisionPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Create_Division->value, null);
     }
 
     /**
@@ -37,7 +39,7 @@ class DivisionPolicy
      */
     public function update(User $user, Division $division): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Update_Division->value, null);
     }
 
     /**
@@ -45,7 +47,7 @@ class DivisionPolicy
      */
     public function delete(User $user, Division $division): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Delete_Division->value, null);
     }
 
     /**
@@ -53,7 +55,7 @@ class DivisionPolicy
      */
     public function restore(User $user, Division $division): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Update_Division->value, null);
     }
 
     /**
@@ -61,6 +63,6 @@ class DivisionPolicy
      */
     public function forceDelete(User $user, Division $division): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Delete_Division->value, null);
     }
 }

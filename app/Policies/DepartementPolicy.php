@@ -2,8 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Departement;
 use App\Models\User;
+use App\Enums\Permission;
+use App\Models\Departement;
+use App\Helpers\PermissionCheck;
 use Illuminate\Auth\Access\Response;
 
 class DepartementPolicy
@@ -13,7 +15,7 @@ class DepartementPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Read_Departement->value, null);
     }
 
     /**
@@ -21,7 +23,7 @@ class DepartementPolicy
      */
     public function view(User $user, Departement $departement): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Read_Departement->value, null);
     }
 
     /**
@@ -29,7 +31,7 @@ class DepartementPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Create_Departement->value, null);
     }
 
     /**
@@ -37,7 +39,7 @@ class DepartementPolicy
      */
     public function update(User $user, Departement $departement): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Update_Departement->value, null);
     }
 
     /**
@@ -45,7 +47,7 @@ class DepartementPolicy
      */
     public function delete(User $user, Departement $departement): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Delete_Departement->value, null);
     }
 
     /**
@@ -53,7 +55,7 @@ class DepartementPolicy
      */
     public function restore(User $user, Departement $departement): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Update_Departement->value, null);
     }
 
     /**
@@ -61,6 +63,6 @@ class DepartementPolicy
      */
     public function forceDelete(User $user, Departement $departement): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Delete_Departement->value, null);
     }
 }

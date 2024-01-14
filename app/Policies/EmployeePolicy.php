@@ -2,8 +2,10 @@
 
 namespace App\Policies;
 
-use App\Models\Employee;
 use App\Models\User;
+use App\Enums\Permission;
+use App\Models\Employee;
+use App\Helpers\PermissionCheck;
 use Illuminate\Auth\Access\Response;
 
 class EmployeePolicy
@@ -13,7 +15,7 @@ class EmployeePolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Read_Employee->value, null);
     }
 
     /**
@@ -21,7 +23,7 @@ class EmployeePolicy
      */
     public function view(User $user, Employee $employee): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Read_Employee->value, null);
     }
 
     /**
@@ -29,7 +31,7 @@ class EmployeePolicy
      */
     public function create(User $user): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Create_Employee->value, null);
     }
 
     /**
@@ -37,7 +39,7 @@ class EmployeePolicy
      */
     public function update(User $user, Employee $employee): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Update_Employee->value, null);
     }
 
     /**
@@ -45,7 +47,7 @@ class EmployeePolicy
      */
     public function delete(User $user, Employee $employee): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Delete_Employee->value, null);
     }
 
     /**
@@ -53,7 +55,7 @@ class EmployeePolicy
      */
     public function restore(User $user, Employee $employee): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Update_Employee->value, null);
     }
 
     /**
@@ -61,6 +63,6 @@ class EmployeePolicy
      */
     public function forceDelete(User $user, Employee $employee): bool
     {
-        //
+        return PermissionCheck::verify($user, Permission::Delete_Employee->value, null);
     }
 }

@@ -13,6 +13,11 @@ use App\Http\Requests\Departement\UpdateDepartementRequest;
 
 class DepartementController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Departement::class, 'departement');
+    }
+
     /**
      * Display a listing of the resource.
      */
