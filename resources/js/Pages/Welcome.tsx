@@ -93,7 +93,7 @@ export default function Welcome({
                     </div>
                 </div>
 
-                <div className="container relative flex justify-center shadow-md bg-slate-900 text-slate-50">
+                <div className="flex justify-center shadow-md bg-slate-900 text-slate-50">
                     <PageHeader className="pb-8 page-header">
                         <a
                             href="https://www.linkedin.com/in/tarazadlyka"
