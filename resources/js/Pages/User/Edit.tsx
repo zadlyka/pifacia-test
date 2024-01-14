@@ -1,6 +1,6 @@
 import { Head, useForm } from "@inertiajs/react";
 import { FormEventHandler, useEffect, useState } from "react";
-import { PageProps } from "@/types";
+import { User, PageProps, Role } from "@/types";
 import DashboardLayout from "@/Layouts/dashboard-layout";
 import {
     Dialog,
@@ -22,18 +22,36 @@ import { Button } from "@/Components/ui/button";
 import InputError from "@/Components/input-error";
 import { Label } from "@/Components/ui/label";
 import { Input } from "@/Components/ui/input";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/Components/ui/select";
 import { cn } from "@/lib/utils";
 
-function AddForm({ className }: { className?: string }) {
-    const { data, setData, post, errors, processing, recentlySuccessful } =
+function EditForm({
+    user,
+    options,
+    className,
+}: {
+    user: User;
+    options: { roles: Role[] };
+    className?: string;
+}) {
+    const roles = options.roles;
+    const { data, setData, patch, errors, processing, recentlySuccessful } =
         useForm({
-            name: "",
+            name: user.name,
+            email: user.email,
+            role_id: user.role_id,
         });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
 
-        post(route("basic.store"));
+        patch(route("user.update", user.id));
     };
 
     return (
@@ -51,6 +69,39 @@ function AddForm({ className }: { className?: string }) {
                 <InputError message={errors.name} className="mt-2" />
             </div>
 
+            <div>
+                <Label htmlFor="email">Email</Label>
+                <Input
+                    id="email"
+                    type="email"
+                    name="email"
+                    value={data.email}
+                    className="block w-full mt-1"
+                    onChange={(e) => setData("email", e.target.value)}
+                />
+                <InputError message={errors.email} className="mt-2" />
+            </div>
+
+            <div>
+                <Label htmlFor="role_id">Role</Label>
+                <Select
+                    onValueChange={(value) => setData("role_id", value)}
+                    defaultValue={data.role_id}
+                >
+                    <SelectTrigger>
+                        <SelectValue placeholder="Select a role" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        {roles.map((item) => (
+                            <SelectItem key={item.id} value={item.id}>
+                                {item.name}
+                            </SelectItem>
+                        ))}
+                    </SelectContent>
+                </Select>
+                <InputError message={errors.role_id} className="mt-2" />
+            </div>
+
             <Button className="w-full" disabled={processing}>
                 Save
             </Button>
@@ -58,7 +109,13 @@ function AddForm({ className }: { className?: string }) {
     );
 }
 
-function DrawerDialogDemo() {
+function DrawerDialogDemo({
+    user,
+    options,
+}: {
+    user: User;
+    options: { roles: Role[] };
+}) {
     const [isOpen, setIsOpen] = useState(true);
     const [isDesktop, setIsDesktop] = useState(false);
 
@@ -81,12 +138,12 @@ function DrawerDialogDemo() {
             <Dialog open={isOpen} onOpenChange={setIsOpen}>
                 <DialogContent className="sm:max-w-[425px]">
                     <DialogHeader>
-                        <DialogTitle>Add basic</DialogTitle>
+                        <DialogTitle>Edit user</DialogTitle>
                         <DialogDescription>
                             Please fill out this form.
                         </DialogDescription>
                     </DialogHeader>
-                    <AddForm />
+                    <EditForm user={user} options={options} />
                 </DialogContent>
             </Dialog>
         );
@@ -96,12 +153,12 @@ function DrawerDialogDemo() {
         <Drawer open={isOpen} onOpenChange={setIsOpen}>
             <DrawerContent>
                 <DrawerHeader className="text-left">
-                    <DrawerTitle>Add basic</DrawerTitle>
+                    <DrawerTitle>Edit user</DrawerTitle>
                     <DrawerDescription>
                         Please fill out this form.
                     </DrawerDescription>
                 </DrawerHeader>
-                <AddForm className="px-4" />
+                <EditForm user={user} options={options} className="px-4" />
                 <DrawerFooter className="pt-2">
                     <DrawerClose asChild>
                         <Button variant="outline">Cancel</Button>
@@ -112,13 +169,17 @@ function DrawerDialogDemo() {
     );
 }
 
-export default function Create({ auth }: PageProps) {
+export default function Edit({
+    auth,
+    user,
+    options,
+}: PageProps<{ user: User; options: { roles: Role[] } }>) {
     return (
         <DashboardLayout user={auth.user}>
-            <Head title="Basic" />
+            <Head title="User" />
             <div className="p-4">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <DrawerDialogDemo />
+                    <DrawerDialogDemo user={user} options={options} />
                 </div>
             </div>
         </DashboardLayout>

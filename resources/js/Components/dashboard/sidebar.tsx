@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import { LucideIcon, Settings } from "lucide-react";
 import { Link } from "@inertiajs/react";
 import { Button, buttonVariants } from "@/Components/ui/button";
+import ApplicationLogo from "@/Components/application-logo";
 
 interface SubMenu {
     name: string;
@@ -24,6 +25,12 @@ export function Sidebar({
 }) {
     return (
         <div className={cn("flex flex-col gap-4 p-4 h-screen", className)}>
+            <div className="flex justify-center w-full">
+                <Link href="/">
+                    <ApplicationLogo className="w-20 h-20 text-gray-500 fill-current" />
+                </Link>
+            </div>
+
             <ul className="flex-grow space-y-2 list-none">
                 {menu.map((item, index) => (
                     <li key={index}>

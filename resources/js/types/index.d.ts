@@ -46,9 +46,11 @@ export interface Employee {
 
 export interface User {
     id: string;
+    role_id: string;
     name: string;
     email: string;
     email_verified_at: string;
+    role?: Role;
 }
 
 export type PageProps<

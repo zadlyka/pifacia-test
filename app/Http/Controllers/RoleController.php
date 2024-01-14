@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Permission;
 use Inertia\Inertia;
 use App\Exports\ExportRole;
 use App\Models\Role;
@@ -36,7 +37,21 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Role/Create');
+        $permissions = Permission::cases();
+        $temp = array();
+
+        foreach ($permissions as $permission) {
+            array_push($temp, (object) [
+                'value' => $permission->value,
+                'label' => str_replace("_", " ", $permission->name)
+            ]);
+        }
+
+        return Inertia::render('Role/Create', [
+            'options' => [
+                'permissions' => $temp,
+            ]
+        ]);
     }
 
     /**
@@ -66,8 +81,21 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
+        $permissions = Permission::cases();
+        $temp = array();
+
+        foreach ($permissions as $permission) {
+            array_push($temp, (object) [
+                'value' => $permission->value,
+                'label' => str_replace("_", " ", $permission->name)
+            ]);
+        }
+
         return Inertia::render('Role/Edit',  [
             'role' => $role,
+            'options' => [
+                'permissions' => $temp
+            ]
         ]);
     }
 

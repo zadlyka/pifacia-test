@@ -3,7 +3,14 @@ import { User } from "@/types";
 import { Sidebar } from "@/Components/dashboard/sidebar";
 import { ScrollArea } from "@/Components/ui/scroll-area";
 import { Header } from "@/Components/dashboard/header";
-import { Grid2X2, LayoutDashboard } from "lucide-react";
+import {
+    Blocks,
+    Building2,
+    LayoutDashboard,
+    ShieldEllipsis,
+    User as UserIcon,
+    Users,
+} from "lucide-react";
 
 export default function DashboardLayout({
     user,
@@ -23,25 +30,31 @@ export default function DashboardLayout({
                 {
                     name: "Role",
                     href: route("role"),
-                    icon: Grid2X2,
+                    icon: ShieldEllipsis,
                     active: route().current("role"),
+                },
+                {
+                    name: "User",
+                    href: route("user"),
+                    icon: UserIcon,
+                    active: route().current("user"),
                 },
                 {
                     name: "Departement",
                     href: route("departement"),
-                    icon: Grid2X2,
+                    icon: Building2,
                     active: route().current("departement"),
                 },
                 {
                     name: "Division",
                     href: route("division"),
-                    icon: Grid2X2,
+                    icon: Blocks,
                     active: route().current("division"),
                 },
                 {
                     name: "Employee",
                     href: route("employee"),
-                    icon: Grid2X2,
+                    icon: Users,
                     active: route().current("employee"),
                 },
             ],
@@ -52,7 +65,7 @@ export default function DashboardLayout({
         <main className="flex h-screen">
             <Sidebar menu={menu} className="hidden w-1/4 sm:flex border-e" />
             <ScrollArea className="w-full h-screen">
-                <Header menu={menu} search={search} className="sticky top-0" />
+                <Header user={user} menu={menu} search={search} className="sticky top-0" />
                 <div>{children}</div>
             </ScrollArea>
         </main>

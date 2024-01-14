@@ -1,6 +1,6 @@
 import { Head, useForm } from "@inertiajs/react";
 import { FormEventHandler, useEffect, useState } from "react";
-import { Role, PageProps } from "@/types";
+import { Role, PageProps, Option } from "@/types";
 import DashboardLayout from "@/Layouts/dashboard-layout";
 import {
     Dialog,
@@ -24,9 +24,18 @@ import { Label } from "@/Components/ui/label";
 import { Input } from "@/Components/ui/input";
 import { cn } from "@/lib/utils";
 import Select from "react-select";
-import { optionsRole } from "./Create";
 
-function EditForm({ role, className }: { role: Role; className?: string }) {
+function EditForm({
+    role,
+    options,
+    className,
+}: {
+    role: Role;
+    options: { permissions: Option[] };
+    className?: string;
+}) {
+    const optionsPermissions = options.permissions;
+
     const { data, setData, patch, errors, processing, recentlySuccessful } =
         useForm({
             name: role.name,
@@ -60,7 +69,7 @@ function EditForm({ role, className }: { role: Role; className?: string }) {
                     id="permissions"
                     name="permissions"
                     isMulti
-                    options={optionsRole}
+                    options={optionsPermissions}
                     className="basic-multi-select"
                     value={data.permissions}
                     onChange={(value) => setData("permissions", value as any)}
@@ -75,7 +84,13 @@ function EditForm({ role, className }: { role: Role; className?: string }) {
     );
 }
 
-function DrawerDialogDemo({ role }: { role: Role }) {
+function DrawerDialogDemo({
+    role,
+    options,
+}: {
+    role: Role;
+    options: { permissions: Option[] };
+}) {
     const [isOpen, setIsOpen] = useState(true);
     const [isDesktop, setIsDesktop] = useState(false);
 
@@ -103,7 +118,7 @@ function DrawerDialogDemo({ role }: { role: Role }) {
                             Please fill out this form.
                         </DialogDescription>
                     </DialogHeader>
-                    <EditForm role={role} />
+                    <EditForm role={role} options={options} />
                 </DialogContent>
             </Dialog>
         );
@@ -118,7 +133,7 @@ function DrawerDialogDemo({ role }: { role: Role }) {
                         Please fill out this form.
                     </DrawerDescription>
                 </DrawerHeader>
-                <EditForm role={role} className="px-4" />
+                <EditForm role={role} options={options} className="px-4" />
                 <DrawerFooter className="pt-2">
                     <DrawerClose asChild>
                         <Button variant="outline">Cancel</Button>
@@ -129,13 +144,17 @@ function DrawerDialogDemo({ role }: { role: Role }) {
     );
 }
 
-export default function Edit({ auth, role }: PageProps<{ role: Role }>) {
+export default function Edit({
+    auth,
+    role,
+    options,
+}: PageProps<{ role: Role; options: { permissions: Option[] } }>) {
     return (
         <DashboardLayout user={auth.user}>
             <Head title="Role" />
             <div className="p-4">
                 <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <DrawerDialogDemo role={role} />
+                    <DrawerDialogDemo role={role} options={options} />
                 </div>
             </div>
         </DashboardLayout>

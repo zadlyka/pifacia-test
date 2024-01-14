@@ -29,9 +29,8 @@ import Select from "react-select";
 
 export const optionsDepartement = [
     { value: "0", label: "Manage All" },
-    { value: "100", label: "Manage Role" },
-    { value: "200", label: "Manage User" },
-    { value: "300", label: "Manage Departement" },
+    { value: "100", label: "Manage Data" },
+    { value: "200", label: "Manage Member" },
 ];
 
 function AddForm({ className }: { className?: string }) {
